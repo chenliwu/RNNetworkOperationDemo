@@ -4,6 +4,8 @@ import {
     Text,
     TextInput,
     Button,
+    Image,
+    ActivityIndicator,
     Dimensions
 } from 'react-native';
 
@@ -18,7 +20,21 @@ export default class LoginPage extends Component {
         this.state = {
             username: "",
             password: "",
+            animating: false
         };
+    }
+
+    // 按钮响应方法，切换显示与隐藏
+    showOrHide() {
+        if (this.state.animating) {
+            this.setState({
+                animating: false
+            });
+        } else {
+            this.setState({
+                animating: true
+            });
+        }
     }
 
     /**
@@ -28,23 +44,32 @@ export default class LoginPage extends Component {
         let account = this.state.account;
         let password = this.state.password;
         //alert(account + "," + password);
-        if(!account){
+        if (!account) {
             alert("请输入账号");
             return;
         }
-        if(!password){
+        if (!password) {
             alert("请输入密码");
             return;
         }
 
-        // 为给定 ID 的 user 创建请求
-        axios.get('http://10.0.2.2:8099/MySSM/api/user/login?username='+account+'&password='+password)
-            .then(function (response) {
-                alert(response);
-            })
-            .catch(function (error) {
-                alert(error);
-            });
+        this.showOrHide();
+
+        setTimeout(function () {
+
+            // 为给定 ID 的 user 创建请求
+            axios.get('http://10.0.2.2:8099/MySSM/api/user/login?username=' + account + '&password=' + password)
+                .then(function (response) {
+                    //alert(response.state+","+response.message);
+                    alert(response.data.state + "," + response.data.message);
+
+                })
+                .catch(function (error) {
+                    alert(error);
+                });
+        }, 2000);
+
+
 
     }
 
@@ -52,6 +77,21 @@ export default class LoginPage extends Component {
     render() {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+                <Image
+                    source={{ uri: "http://10.0.2.2:8099/MySSM/api/files/getImg" }}
+                    style={{ width: 100, height: 100 }}></Image>
+
+                <ActivityIndicator
+                    animating={this.state.animating}
+                    style={{
+                        height: 80,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 8,
+                    }}
+                    size="large" />
+
                 <TextInput
                     style={{ width: Dimensions.get('window').width - 20 }}
                     placeholder="请输入账号"
