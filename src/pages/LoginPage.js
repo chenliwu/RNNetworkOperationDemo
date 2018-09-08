@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import axios from 'axios';
+import axiosInstance from './../utils/AxiosUtils';
 
 
 export default class LoginPage extends Component {
@@ -58,7 +59,9 @@ export default class LoginPage extends Component {
         setTimeout(function () {
 
             // 为给定 ID 的 user 创建请求
-            axios.get('http://10.0.2.2:8099/MySSM/api/user/login?username=' + account + '&password=' + password)
+            // http://10.0.2.2:8099/MySSM/api/user/login
+            axiosInstance.get('/api/user/login?username=' + account + 
+                '&password=' + password)
                 .then(function (response) {
                     //alert(response.state+","+response.message);
                     alert(response.data.state + "," + response.data.message);
@@ -75,6 +78,7 @@ export default class LoginPage extends Component {
 
 
     render() {
+        // http://10.0.2.2:8099/MySSM/api/files/getImg
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
