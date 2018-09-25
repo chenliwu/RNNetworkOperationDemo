@@ -60,20 +60,46 @@ export default class LoginPage extends Component {
 
             // 为给定 ID 的 user 创建请求
             // http://10.0.2.2:8099/MySSM/api/user/login
-            axiosInstance.get('/api/user/login?username=' + account + 
+            axiosInstance.get('/api/user/login?username=' + account +
                 '&password=' + password)
                 .then(function (response) {
                     //alert(response.state+","+response.message);
                     alert(response.data.state + "," + response.data.message);
-
+                    if(response.data.state === 200){
+                        _toMainPage();
+                    }
                 })
                 .catch(function (error) {
                     alert(error);
                 });
         }, 2000);
+    }
 
+    _login1 = () => {
+        let account = this.state.account;
+        let password = this.state.password;
+        //alert(account + "," + password);
+        if (!account) {
+            alert("请输入账号");
+            return;
+        }
+        if (!password) {
+            alert("请输入密码");
+            return;
+        }
+        fetch('http://10.0.2.2:8099/MySSM/api/user/login?username=' + account +
+        '&password=' + password)
+            .then(function (response) {
+                //alert(response.json());
+                alert(response.json().state + "," + response.json().message);
+            })
+            .catch(function (error) {
+                alert(error);
+            });
+    }
 
-
+    _toMainPage = ()=>{
+        this.props.navigation.navigate("MainPage");
     }
 
 
