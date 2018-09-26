@@ -56,6 +56,8 @@ export default class LoginPage extends Component {
 
         this.showOrHide();
 
+        var { navigation } = this.props;
+
         setTimeout(function () {
 
             // 为给定 ID 的 user 创建请求
@@ -65,8 +67,8 @@ export default class LoginPage extends Component {
                 .then(function (response) {
                     //alert(response.state+","+response.message);
                     alert(response.data.state + "," + response.data.message);
-                    if(response.data.state === 200){
-                        _toMainPage();
+                    if (response.data.state === 200) {
+                        navigation.navigate("MainPage");
                     }
                 })
                 .catch(function (error) {
@@ -88,7 +90,7 @@ export default class LoginPage extends Component {
             return;
         }
         fetch('http://10.0.2.2:8099/MySSM/api/user/login?username=' + account +
-        '&password=' + password)
+            '&password=' + password)
             .then(function (response) {
                 //alert(response.json());
                 alert(response.json().state + "," + response.json().message);
@@ -97,11 +99,6 @@ export default class LoginPage extends Component {
                 alert(error);
             });
     }
-
-    _toMainPage = ()=>{
-        this.props.navigation.navigate("MainPage");
-    }
-
 
     render() {
         // http://10.0.2.2:8099/MySSM/api/files/getImg
