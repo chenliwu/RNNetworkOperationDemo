@@ -9,7 +9,7 @@ import {
 } from 'react-navigation';
 
 import HomeStack from './../component/HomeScreen';
-import PersonalStack from './../component/PersonalScreen';
+import PersonalStack from '../component/PersonalScreen';
 
 const AppTabNavigator = createBottomTabNavigator(
     {

@@ -12,6 +12,11 @@ import {
 import axios from 'axios';
 import axiosInstance from './../utils/AxiosUtils';
 
+import AsyncStorageUtils from './../utils/AsyncStorageUtils';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 
 export default class LoginPage extends Component {
 
@@ -40,6 +45,7 @@ export default class LoginPage extends Component {
 
     /**
     * 登录方法
+    * 使用axios
     */
     _login = () => {
         let account = this.state.account;
@@ -68,6 +74,8 @@ export default class LoginPage extends Component {
                     //alert(response.state+","+response.message);
                     alert(response.data.state + "," + response.data.message);
                     if (response.data.state === 200) {
+                        //登录成功，跳转到主页
+                        AsyncStorageUtils.save("isLogin", true);
                         navigation.navigate("MainPage");
                     }
                 })
@@ -77,6 +85,9 @@ export default class LoginPage extends Component {
         }, 2000);
     }
 
+    /**
+     * 使用fetch
+     */
     _login1 = () => {
         let account = this.state.account;
         let password = this.state.password;
