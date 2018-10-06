@@ -18,7 +18,6 @@ class AsyncStorageUtils {
         });
     }
 
-
     /**
      * 保存
      * @param key
@@ -28,7 +27,6 @@ class AsyncStorageUtils {
     static save(key, value) {
         return AsyncStorage.setItem(key, JSON.stringify(value));
     }
-
 
     /**
      * 更新
@@ -42,7 +40,6 @@ class AsyncStorageUtils {
             return AsyncStorage.setItem(key, JSON.stringify(value));
         });
     }
-
 
     /**
      * 更新

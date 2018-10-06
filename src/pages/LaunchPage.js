@@ -24,12 +24,25 @@ class LaunchPage extends React.Component {
         var { navigation } = this.props;
         let timer = setTimeout(() => {
             //alert(AsyncStorageUtils.get("isLogin"));
-            if (AsyncStorageUtils.get("isLogin") == true) {
-                //用户已经登录
-                navigation.navigate("MainPage");
-            } else {
-                navigation.navigate("LoginPage");
-            }
+            AsyncStorageUtils.get("isLogin")
+                .then((value) => {
+                    // 如果找到数据，则在then方法中返回
+                    // 注意：这是异步返回的结果（不了解异步请自行搜索学习）
+                    // 你只能在then这个方法内继续处理ret数据
+                    // 而不能在then以外处理
+                    //alert(value);
+                    if (value == true) {
+                        //用户已经登录
+                        navigation.navigate("MainPage");
+                    } else {
+                        navigation.navigate("LoginPage");
+                    }
+                }).catach((error) => {
+                    //如果没有找到数据且没有sync方法，
+                    //或者有其他异常，则在catch中返回
+                    navigation.navigate("LoginPage");
+                });
+
         }, 2000)
     }
 
